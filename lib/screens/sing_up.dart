@@ -35,53 +35,17 @@ class SingUp extends StatelessWidget {
               ),
               SizedBox(height: 10,),
               TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Username',
-                  fillColor: const Color.fromARGB(255, 167, 180, 211),
-                  filled: true,
-                  labelStyle: TextStyle(
-                    color: const Color.fromARGB(255, 9, 28, 44),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
-
-                  suffix: Icon(
-                    Icons.person,
-                    color: const Color.fromARGB(255, 7, 7, 7),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
+                decoration:_buildInputDecoration('Username', Icons.person),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Please Enter your name';
+                    return 'Please Enter your Username';
                   }
                   return null;
                 },
               ),
               SizedBox(height: 16.0),
               TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  fillColor: const Color.fromARGB(255, 167, 180, 211),
-                  filled: true,
-                  labelStyle: TextStyle(
-                    color: const Color.fromARGB(255, 9, 28, 44),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
-
-                  suffix: Icon(
-                    Icons.email,
-                    color: const Color.fromARGB(255, 7, 7, 7),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
+                decoration: _buildInputDecoration('Email', Icons.email),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please Enter your email';
@@ -97,25 +61,7 @@ class SingUp extends StatelessWidget {
               ),
               SizedBox(height: 16.0),
               TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Phone Number',
-                  fillColor: const Color.fromARGB(255, 167, 180, 211),
-                  filled: true,
-                  labelStyle: TextStyle(
-                    color: const Color.fromARGB(255, 9, 28, 44),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
-
-                  suffix: Icon(
-                    Icons.call,
-                    color: const Color.fromARGB(255, 7, 7, 7),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
+                decoration:_buildInputDecoration('Phone Number', Icons.call),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please Enter your phone';
@@ -128,25 +74,7 @@ class SingUp extends StatelessWidget {
               ),
               SizedBox(height: 16.0),
               TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  fillColor: const Color.fromARGB(255, 167, 180, 211),
-                  filled: true,
-                  labelStyle: TextStyle(
-                    color: const Color.fromARGB(255, 9, 28, 44),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
-
-                  suffix: Icon(
-                    Icons.lock,
-                    color: const Color.fromARGB(255, 7, 7, 7),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
+                decoration: _buildInputDecoration('Password',Icons.lock),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please Enter your password';
@@ -156,25 +84,7 @@ class SingUp extends StatelessWidget {
               ),
               SizedBox(height: 16),
               TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Confirm Password',
-                  fillColor: const Color.fromARGB(255, 167, 180, 211),
-                  filled: true,
-                  labelStyle: TextStyle(
-                    color: const Color.fromARGB(255, 9, 28, 44),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
-
-                  suffix: Icon(
-                    Icons.lock,
-                    color: const Color.fromARGB(255, 7, 7, 7),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
+                decoration:_buildInputDecoration('Confirm Password',Icons.lock), 
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please Enter your confirm password..';
@@ -219,5 +129,26 @@ class SingUp extends StatelessWidget {
         ),
       ),
     );
+  }
+  InputDecoration _buildInputDecoration(String label,IconData suffixicon){
+    return InputDecoration(
+                  labelText: label,
+                  fillColor: const Color.fromARGB(255, 167, 180, 211),
+                  filled: true,
+                  labelStyle: TextStyle(
+                    color: const Color.fromARGB(255, 9, 28, 44),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+
+                  suffix: Icon(
+                    suffixicon,
+                    color: const Color.fromARGB(255, 7, 7, 7),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                );
   }
 }
