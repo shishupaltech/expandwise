@@ -11,6 +11,50 @@ class SingUp extends StatelessWidget {
     }
   }
 
+  String? _validateUsername(value) {
+    if (value!.isEmpty) {
+      return 'Please Enter your Username';
+    }
+    return null;
+  }
+
+  String? _validateEmail(value) {
+    if (value!.isEmpty) {
+      return 'Please Enter your email';
+    }
+    RegExp emailRegExp = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    );
+    if (!emailRegExp.hasMatch(value)) {
+      return 'Enter your valie Email';
+    }
+    return null;
+  }
+
+  String? _validatePhoneNumber(value) {
+    if (value!.isEmpty) {
+      return 'Please Enter your phone';
+    }
+    if (value.length != 10) {
+      return 'Please Enter a 10 digit number';
+    }
+    return null;
+  }
+
+  String? _validatePassword(value) {
+    if (value!.isEmpty) {
+      return 'Please Enter your password';
+    }
+    return null;
+  }
+
+  String? _validateConfirmPassword(value) {
+    if (value!.isEmpty) {
+      return 'Please Enter your confirm password..';
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +64,7 @@ class SingUp extends StatelessWidget {
           key: _formkey,
           child: Column(
             children: [
-              SizedBox(height: 20.0,),
+              SizedBox(height: 20.0),
               SizedBox(
                 width: double.infinity,
                 child: Text(
@@ -33,64 +77,33 @@ class SingUp extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 10,),
+              SizedBox(height: 10),
               TextFormField(
-                decoration:_buildInputDecoration('Username', Icons.person),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please Enter your Username';
-                  }
-                  return null;
-                },
+                decoration: _buildInputDecoration('Username', Icons.person),
+                validator: _validateUsername,
               ),
               SizedBox(height: 16.0),
               TextFormField(
                 decoration: _buildInputDecoration('Email', Icons.email),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please Enter your email';
-                  }
-                  RegExp emailRegExp = RegExp(
-                    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-                  );
-                  if (!emailRegExp.hasMatch(value)) {
-                    return 'Enter your valie Email';
-                  }
-                  return null;
-                },
+                validator: _validateEmail,
               ),
               SizedBox(height: 16.0),
               TextFormField(
-                decoration:_buildInputDecoration('Phone Number', Icons.call),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please Enter your phone';
-                  }
-                  if (value.length != 10) {
-                    return 'Please Enter a 10 digit number';
-                  }
-                  return null;
-                },
+                decoration: _buildInputDecoration('Phone Number', Icons.call),
+                validator: _validatePhoneNumber,
               ),
               SizedBox(height: 16.0),
               TextFormField(
-                decoration: _buildInputDecoration('Password',Icons.lock),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please Enter your password';
-                  }
-                  return null;
-                },
+                decoration: _buildInputDecoration('Password', Icons.lock),
+                validator: _validatePassword,
               ),
               SizedBox(height: 16),
               TextFormField(
-                decoration:_buildInputDecoration('Confirm Password',Icons.lock), 
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please Enter your confirm password..';
-                  }
-                  return null;
-                },
+                decoration: _buildInputDecoration(
+                  'Confirm Password',
+                  Icons.lock,
+                ),
+                validator: _validateConfirmPassword,
               ),
               SizedBox(height: 16.0),
               Container(
@@ -99,7 +112,9 @@ class SingUp extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: _submitForm,
                   style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all(const Color.fromARGB(255, 3, 17, 18)),
+                    backgroundColor: WidgetStateProperty.all(
+                      const Color.fromARGB(255, 3, 17, 18),
+                    ),
                     shape: WidgetStateProperty.all(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
@@ -107,48 +122,47 @@ class SingUp extends StatelessWidget {
                     ),
                     elevation: WidgetStateProperty.all(4),
                   ),
-                  
+
                   child: Text(
                     'Create',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
-                      fontSize: 25
+                      fontSize: 25,
                     ),
                   ),
                 ),
-                
               ),
-                SizedBox(height: 20,),
-                TextButton(onPressed: (){
-                  
-                }, child: 
-                Text('Login',style: TextStyle(color: const Color.fromARGB(255, 3, 17, 18),fontSize: 28),))
+              SizedBox(height: 20),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  'Login',
+                  style: TextStyle(
+                    color: const Color.fromARGB(255, 3, 17, 18),
+                    fontSize: 28,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ),
     );
   }
-  InputDecoration _buildInputDecoration(String label,IconData suffixicon){
-    return InputDecoration(
-                  labelText: label,
-                  fillColor: const Color.fromARGB(255, 167, 180, 211),
-                  filled: true,
-                  labelStyle: TextStyle(
-                    color: const Color.fromARGB(255, 9, 28, 44),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
 
-                  suffix: Icon(
-                    suffixicon,
-                    color: const Color.fromARGB(255, 7, 7, 7),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                );
+  InputDecoration _buildInputDecoration(String label, IconData suffixicon) {
+    return InputDecoration(
+      labelText: label,
+      fillColor: const Color.fromARGB(255, 167, 180, 211),
+      filled: true,
+      labelStyle: TextStyle(color: const Color.fromARGB(255, 9, 28, 44)),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey),
+      ),
+
+      suffix: Icon(suffixicon, color: const Color.fromARGB(255, 7, 7, 7)),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+    );
   }
 }
