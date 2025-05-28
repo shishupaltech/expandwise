@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spendwise/utils/appvalidator.dart';
 
 class SingUp extends StatelessWidget {
   SingUp({super.key});
@@ -10,51 +11,7 @@ class SingUp extends StatelessWidget {
       );
     }
   }
-
-  String? _validateUsername(value) {
-    if (value!.isEmpty) {
-      return 'Please Enter your Username';
-    }
-    return null;
-  }
-
-  String? _validateEmail(value) {
-    if (value!.isEmpty) {
-      return 'Please Enter your email';
-    }
-    RegExp emailRegExp = RegExp(
-      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-    );
-    if (!emailRegExp.hasMatch(value)) {
-      return 'Enter your valie Email';
-    }
-    return null;
-  }
-
-  String? _validatePhoneNumber(value) {
-    if (value!.isEmpty) {
-      return 'Please Enter your phone';
-    }
-    if (value.length != 10) {
-      return 'Please Enter a 10 digit number';
-    }
-    return null;
-  }
-
-  String? _validatePassword(value) {
-    if (value!.isEmpty) {
-      return 'Please Enter your password';
-    }
-    return null;
-  }
-
-  String? _validateConfirmPassword(value) {
-    if (value!.isEmpty) {
-      return 'Please Enter your confirm password..';
-    }
-    return null;
-  }
-
+  var appvalidator = Appvalidator();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,22 +37,22 @@ class SingUp extends StatelessWidget {
               SizedBox(height: 10),
               TextFormField(
                 decoration: _buildInputDecoration('Username', Icons.person),
-                validator: _validateUsername,
+                validator:appvalidator.validateUsername,
               ),
               SizedBox(height: 16.0),
               TextFormField(
                 decoration: _buildInputDecoration('Email', Icons.email),
-                validator: _validateEmail,
+                validator:appvalidator.validateEmail,
               ),
               SizedBox(height: 16.0),
               TextFormField(
                 decoration: _buildInputDecoration('Phone Number', Icons.call),
-                validator: _validatePhoneNumber,
+                validator:appvalidator.validatePhoneNumber,
               ),
               SizedBox(height: 16.0),
               TextFormField(
                 decoration: _buildInputDecoration('Password', Icons.lock),
-                validator: _validatePassword,
+                validator:appvalidator.validatePassword,
               ),
               SizedBox(height: 16),
               TextFormField(
@@ -103,7 +60,7 @@ class SingUp extends StatelessWidget {
                   'Confirm Password',
                   Icons.lock,
                 ),
-                validator: _validateConfirmPassword,
+                validator:appvalidator.validateConfirmPassword,
               ),
               SizedBox(height: 16.0),
               Container(
