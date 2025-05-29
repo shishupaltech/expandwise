@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:spendwise/screens/login_screen.dart';
+import 'package:spendwise/screens/sing_up.dart';
 import 'package:spendwise/utils/appvalidator.dart';
 
-class SingUp extends StatelessWidget {
-  SingUp({super.key});
+class LoginScreen extends StatelessWidget {
+  LoginScreen({super.key});
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   void _submitForm() {
     if (_formkey.currentState!.validate()) {
@@ -12,7 +12,6 @@ class SingUp extends StatelessWidget {
       );
     }
   }
-
   var appvalidator = Appvalidator();
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,7 @@ class SingUp extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: Text(
-                  'Create New Account',
+                  'Login Account',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.blueAccent,
@@ -39,30 +38,13 @@ class SingUp extends StatelessWidget {
               SizedBox(height: 10),
               TextFormField(
                 decoration: _buildInputDecoration('Username', Icons.person),
-                validator: appvalidator.validateUsername,
+                validator:appvalidator.validateUsername,
               ),
-              SizedBox(height: 16.0),
-              TextFormField(
-                decoration: _buildInputDecoration('Email', Icons.email),
-                validator: appvalidator.validateEmail,
-              ),
-              SizedBox(height: 16.0),
-              TextFormField(
-                decoration: _buildInputDecoration('Phone Number', Icons.call),
-                validator: appvalidator.validatePhoneNumber,
-              ),
+              
               SizedBox(height: 16.0),
               TextFormField(
                 decoration: _buildInputDecoration('Password', Icons.lock),
-                validator: appvalidator.validatePassword,
-              ),
-              SizedBox(height: 16),
-              TextFormField(
-                decoration: _buildInputDecoration(
-                  'Confirm Password',
-                  Icons.lock,
-                ),
-                validator: appvalidator.validateConfirmPassword,
+                validator:appvalidator.validatePassword,
               ),
               SizedBox(height: 16.0),
               Container(
@@ -95,14 +77,12 @@ class SingUp extends StatelessWidget {
               SizedBox(height: 20),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                  );
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SingUp()));
                 },
                 child: Text(
-                  'Login',
+                  'Create New Account',
                   style: TextStyle(
-                     color: const Color.fromARGB(255, 163, 38, 25),
+                    color: const Color.fromARGB(255, 163, 38, 25),
                     fontSize: 28,
                   ),
                 ),
