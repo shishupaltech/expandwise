@@ -9,13 +9,20 @@ class SingUp extends StatelessWidget {
   final _emailController = TextEditingController();
   final _phoneNumberController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confirmPassordController = TextEditingController();
 
   void _submitForm() {
     if (_formkey.currentState!.validate()) {
-      ScaffoldMessenger.of(_formkey.currentContext!).showSnackBar(
-        const SnackBar(content: Text('Form successfully submitted!..')),
-      );
+      // ScaffoldMessenger.of(_formkey.currentContext!).showSnackBar(
+      //   const SnackBar(content: Text('Form successfully submitted!..')),
+      // );
+
+      var data={
+        'username':_userNameController.text,
+        'email':_emailController.text,
+        'phonenumber':_phoneNumberController.text,
+        'password':_passwordController.text,
+        
+      };
     }
   }
 
@@ -68,14 +75,14 @@ class SingUp extends StatelessWidget {
                   validator: appvalidator.validatePassword,
                 ),
                 SizedBox(height: 16),
-                TextFormField(
-                  controller: _confirmPassordController,
-                  decoration: _buildInputDecoration(
-                    'Confirm Password',
-                    Icons.lock,
-                  ),
-                  validator: appvalidator.validateConfirmPassword,
-                ),
+                // TextFormField(
+                //   controller: _confirmPassordController,
+                //   decoration: _buildInputDecoration(
+                //     'Confirm Password',
+                //     Icons.lock,
+                //   ),
+                //   validator: appvalidator.validateConfirmPassword,
+                // ),
                 SizedBox(height: 16.0),
                 Container(
                   width: double.infinity,
