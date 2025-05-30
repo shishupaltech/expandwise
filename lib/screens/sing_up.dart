@@ -1,21 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:spendwise/screens/login_screen.dart';
+import 'package:spendwise/services/auth_service.dart';
 import 'package:spendwise/utils/appvalidator.dart';
 
-class SingUp extends StatelessWidget {
+class SingUp extends StatefulWidget {
   SingUp({super.key});
+
+  @override
+  State<SingUp> createState() => _SingUpState();
+}
+
+class _SingUpState extends State<SingUp> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+
   final _userNameController = TextEditingController();
+
   final _emailController = TextEditingController();
+
   final _phoneNumberController = TextEditingController();
+
   final _passwordController = TextEditingController();
+
+  var authSerive = AuthService();
+  var isLoader = false;
 
   Future<void> _submitForm() async {
     if (_formkey.currentState!.validate()) {
       // ScaffoldMessenger.of(_formkey.currentContext!).showSnackBar(
       //   const SnackBar(content: Text('Form successfully submitted!..')),
       // );
-
+      setState(() {
+        isLoader=true;
+      });
       var data={
         'username':_userNameController.text,
         'email':_emailController.text,
@@ -23,10 +39,17 @@ class SingUp extends StatelessWidget {
         'password':_passwordController.text,
         
       };
+      print(data);
+      await authSerive.createUser(data, context);
+        setState(() {
+        isLoader=false;
+      });
+      
     }
   }
 
   var appvalidator = Appvalidator();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,7 +111,7 @@ class SingUp extends StatelessWidget {
                   width: double.infinity,
                   height: 60,
                   child: ElevatedButton(
-                    onPressed: _submitForm,
+                    onPressed:(){isLoader?print('Loading'):_submitForm();},
                     style: ButtonStyle(
                       backgroundColor: WidgetStateProperty.all(
                         const Color.fromARGB(255, 3, 17, 18),
@@ -100,8 +123,10 @@ class SingUp extends StatelessWidget {
                       ),
                       elevation: WidgetStateProperty.all(4),
                     ),
-        
-                    child: Text(
+
+                    
+                    child: isLoader? Center(child: CircularProgressIndicator()):
+                     Text(
                       'Create',
                       style: TextStyle(
                         color: Colors.white,
