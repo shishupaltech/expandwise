@@ -10,7 +10,7 @@ class SingUp extends StatelessWidget {
   final _phoneNumberController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  void _submitForm() {
+  Future<void> _submitForm() async {
     if (_formkey.currentState!.validate()) {
       // ScaffoldMessenger.of(_formkey.currentContext!).showSnackBar(
       //   const SnackBar(content: Text('Form successfully submitted!..')),
