@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:spendwise/screens/sing_up.dart';
 import 'package:spendwise/utils/appvalidator.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+
   void _submitForm() {
     if (_formkey.currentState!.validate()) {
       ScaffoldMessenger.of(_formkey.currentContext!).showSnackBar(
@@ -12,7 +19,9 @@ class LoginScreen extends StatelessWidget {
       );
     }
   }
+
   var appvalidator = Appvalidator();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
