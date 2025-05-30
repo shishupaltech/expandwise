@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spendwise/screens/dashboard.dart';
 import 'package:spendwise/screens/login_screen.dart';
 import 'package:spendwise/services/auth_service.dart';
 import 'package:spendwise/utils/appvalidator.dart';
@@ -41,6 +42,9 @@ class _SingUpState extends State<SingUp> {
       };
       print(data);
       await authSerive.createUser(data, context);
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => Dashboard()),
+      );
         setState(() {
         isLoader=false;
       });

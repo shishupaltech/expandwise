@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:spendwise/screens/dashboard.dart';
 
 class AuthService {
   createUser(data, context) async {
@@ -13,12 +14,16 @@ class AuthService {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('User Created Successfully'))
       );
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => Dashboard()),
+      );
     } on FirebaseAuthException catch (e) {
       print('FirebaseAuthException code: ${e.code}');
       print('FirebaseAuthException message: ${e.message}');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error: ${e.message}')),
       );
+      
     } catch (e) {
       print('Unknown error: $e');
     }
@@ -35,7 +40,10 @@ class AuthService {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Login successful!')),
       );
-
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => Dashboard()),
+      );
+      
       // TODO: Navigate to home screen or dashboard here.
       // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomePage()));
     }catch(e){
