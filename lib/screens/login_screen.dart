@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spendwise/screens/sing_up.dart';
+import 'package:spendwise/services/auth_service.dart';
 import 'package:spendwise/utils/appvalidator.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -11,12 +12,32 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+   var authSerive = AuthService();
+  var isLoader = false;
+  
 
-  void _submitForm() {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  Future<void> _submitForm() async {
     if (_formkey.currentState!.validate()) {
-      ScaffoldMessenger.of(_formkey.currentContext!).showSnackBar(
-        const SnackBar(content: Text('Form successfully submitted!..')),
-      );
+      // ScaffoldMessenger.of(_formkey.currentContext!).showSnackBar(
+      //   const SnackBar(content: Text('Form successfully submitted!..')),
+      // );
+      setState(() {
+        isLoader=true;
+      });
+      var data={
+        
+        'email':_emailController.text,
+        'password':_passwordController.text,
+        
+      };
+      print(data);
+      await authSerive.login(data, context);
+        setState(() {
+        isLoader=false;
+      });
+      
     }
   }
 
@@ -46,43 +67,47 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: 10),
               TextFormField(
-                decoration: _buildInputDecoration('Username', Icons.person),
+                controller: _emailController,
+                decoration: _buildInputDecoration('Username or Email', Icons.person),
                 validator:appvalidator.validateUsername,
               ),
               
               SizedBox(height: 16.0),
               TextFormField(
+                controller: _passwordController,
                 decoration: _buildInputDecoration('Password', Icons.lock),
                 validator:appvalidator.validatePassword,
               ),
               SizedBox(height: 16.0),
               Container(
-                width: double.infinity,
-                height: 60,
-                child: ElevatedButton(
-                  onPressed: _submitForm,
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all(
-                      const Color.fromARGB(255, 3, 17, 18),
-                    ),
-                    shape: WidgetStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
+                  width: double.infinity,
+                  height: 60,
+                  child: ElevatedButton(
+                    onPressed:(){isLoader?print('Loading'):_submitForm();},
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(
+                        const Color.fromARGB(255, 3, 17, 18),
                       ),
+                      shape: WidgetStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      elevation: WidgetStateProperty.all(4),
                     ),
-                    elevation: WidgetStateProperty.all(4),
-                  ),
 
-                  child: Text(
-                    'Create',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 25,
+                    
+                    child: isLoader? Center(child: CircularProgressIndicator()):
+                     Text(
+                      'Login',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 25,
+                      ),
                     ),
                   ),
                 ),
-              ),
               SizedBox(height: 20),
               TextButton(
                 onPressed: () {

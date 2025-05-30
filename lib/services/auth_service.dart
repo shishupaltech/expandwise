@@ -10,6 +10,9 @@ class AuthService {
         password: data['password'],
       );
       print('User created: ${credential.user?.uid}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('User Created Successfully'))
+      );
     } on FirebaseAuthException catch (e) {
       print('FirebaseAuthException code: ${e.code}');
       print('FirebaseAuthException message: ${e.message}');
@@ -18,6 +21,25 @@ class AuthService {
       );
     } catch (e) {
       print('Unknown error: $e');
+    }
+  }
+
+  login(data,context) async {
+   try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: data['email'],
+        password: data['password'],
+      );
+
+      print('Login successful: ${credential.user?.uid}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login successful!')),
+      );
+
+      // TODO: Navigate to home screen or dashboard here.
+      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomePage()));
+    }catch(e){
+      print(e);
     }
   }
 }
