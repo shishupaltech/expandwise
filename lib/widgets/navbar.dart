@@ -9,16 +9,23 @@ class Navbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return NavigationBar(
         onDestinationSelected: onDestinationSelected,
-        indicatorColor: Colors.amber,
+        // indicatorColor: Colors.amber,
         selectedIndex: selectedIndex,
+        indicatorColor:Colors.blue.shade500,
+        height: 50,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,// this is used to hide the text of icon in bottom navigation bar.
+        
         destinations: const <Widget>[
+
           NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
+            icon: Icon(Icons.home),
+            selectedIcon: Icon(Icons.home,color: Colors.white,),
+            
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Badge(child: Icon(Icons.notifications_sharp)),
+            icon: Icon(Icons.explore),
+            selectedIcon: Icon(Icons.explore,color: Colors.white,),
             label: 'Transaction',
           ),
         

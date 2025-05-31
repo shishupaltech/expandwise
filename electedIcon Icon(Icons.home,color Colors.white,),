@@ -1,0 +1,17 @@
+[33ma425648[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m step:10 home_screen and transaction_screen is created and navbar also created, changes in dashboar by making the list of all the screen
+[33m104f97d[m changes navigator.push to navigator.pushreplacemnt
+[33m1ae80b0[m convert dashboard statelesswidget to statefullwidget
+[33mdbb4f25[m dashboard is created with logout functionality
+[33m08b0446[m auth_gate is created in widgets folder and dashboard file in screens
+[33m43fb050[m login functionality add in auth service and login page is ready to login
+[33mff61d36[m login ui changed from stateless widget to statefulwidget
+[33m8d4d342[m auth_service change litle bit to see error messagesignup is done data is saving on firebase and gradlekts changes with 23 updated version.
+[33mec44949[m void is converted to future void function in signup
+[33md32d5ff[m confirm password is removed from ui
+[33mabe8f03[m two package include fiarebase_auth, cloud_firestore and auth_service and singup page with controller is ready
+[33m2ec0ff3[m firebase connection and configure done
+[33m309308a[m login and firebase connectivity is done
+[33ma9620e0[m[33m ([m[1;31morigin/validatorclassforapp[m[33m, [m[1;32mvalidatorclassforapp[m[33m)[m utils is done for app validator
+[33m69cbc86[m create separete function for validation
+[33m957d656[m create the seperate function for inputdecoratoin
+[33me8d0836[m signup is done
