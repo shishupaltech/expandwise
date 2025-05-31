@@ -18,19 +18,6 @@ class _DashboardState extends State<Dashboard> {
     HomeScreen(),
     TransanctionScreen(),
   ];
-  var isLogoutLoading = false;
-  logOut() async{
-    setState(() {
-      isLogoutLoading=true;
-    });
-    await FirebaseAuth.instance.signOut();
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => LoginScreen()),
-      );
-    setState(() {
-      isLogoutLoading=false;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,15 +25,7 @@ class _DashboardState extends State<Dashboard> {
       bottomNavigationBar: Navbar(selectedIndex:currentIndex, onDestinationSelected: (int value){setState(() {
         currentIndex = value;
       });}),
-      appBar: AppBar(
-        backgroundColor:Colors.blueAccent,
-        actions: [
-          IconButton(onPressed: (){
-            logOut();
-          }, icon:isLogoutLoading?CircularProgressIndicator():
-           Icon(Icons.exit_to_app)),
-        ],
-      ),
+      
       body: pageViewList[
         currentIndex
       ],
