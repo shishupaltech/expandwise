@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:spendwise/utils/appvalidator.dart';
 import 'package:spendwise/widgets/category_dropdown.dart';
 
 class AddTransactionForm extends StatefulWidget {
@@ -12,15 +12,47 @@ class AddTransactionForm extends StatefulWidget {
 class _AddTransactionFormState extends State<AddTransactionForm> {
   var type = "credit";
   var category = "Others";
+
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  var isLoader = false;
+  var appValidator = Appvalidator();
+  Future<void> _submitForm() async {
+    if (_formkey.currentState!.validate()) {
+      setState(() {
+        isLoader = true;
+      });
+      // var data = {
+      //   'email': _emailController.text,
+      //   'password': _passwordController.text,
+      // };
+
+      print(data);
+      await authSerive.login(data, context);
+      Navigator.of(
+        context,
+      ).pushReplacement(MaterialPageRoute(builder: (context) => Dashboard()));
+      setState(() {
+        isLoader = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Form(
+        key: _formkey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextFormField(decoration: InputDecoration(labelText: 'Title')),
             TextFormField(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: appValidator.isEmptyCheck,
+              decoration: InputDecoration(labelText: 'Title'),
+            ),
+            TextFormField(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: appValidator.isEmptyCheck,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(labelText: 'amount'),
             ),
@@ -50,7 +82,15 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
               },
             ),
             SizedBox(height: 16),
-            ElevatedButton(onPressed: () {}, child: Text('Add Trasaction')),
+            ElevatedButton(
+              onPressed: () {
+                if(isLoader==false){
+                _submitForm();
+                }
+              },
+              child: isLoader?Center(child: CircularProgressIndicator()):
+               Text('Add Trasaction'),
+            ),
           ],
         ),
       ),
