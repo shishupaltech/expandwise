@@ -46,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
         color: Colors.blue.shade900,
         width: double.infinity,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,7 +118,13 @@ class CardOne extends StatelessWidget {
           padding: EdgeInsets.all(10),
           child: Row(
             children: [
-              Column(children: [Text('Credit',style: TextStyle(color: color,fontSize: 30),), Text('₹58000')]),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Credit', style: TextStyle(color: color, fontSize: 30)),
+                  Text('₹58000', style: TextStyle(color: color, fontSize: 30)),
+                ],
+              ),
             ],
           ),
         ),
