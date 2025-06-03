@@ -26,12 +26,22 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+
+  _dialogBuilder(BuildContext context){
+    return showDialog(context: context, builder: (context){
+       return AlertDialog(
+        content: Text('test'),
+       );
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue.shade900,
-        onPressed: (() {}),
+        onPressed:((){_dialogBuilder(context);}),
         child: Icon(Icons.add,color: Colors.white,),
       ),
       appBar: AppBar(
