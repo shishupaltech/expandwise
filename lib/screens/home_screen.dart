@@ -45,58 +45,62 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Container(
         color: Colors.blue.shade900,
         width: double.infinity,
-        child: Column(
+        child: Column(children: [HeroCard()]),
+      ),
+    );
+  }
+}
+
+class HeroCard extends StatelessWidget {
+  const HeroCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Total Balance',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                    height: 1.2,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Text(
-                  '₹ 5800988',
-                  style: TextStyle(
-                    fontSize: 50,
-                    color: Colors.white,
-                    height: 1.2,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-
-            Container(
-              padding: EdgeInsets.only(
-                top: 30,
-                bottom: 10,
-                left: 10,
-                right: 10,
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
-                ),
+            Text(
+              'Total Balance',
+              style: TextStyle(
+                fontSize: 18,
                 color: Colors.white,
+                height: 1.2,
+                fontWeight: FontWeight.w600,
               ),
-              child: Row(
-                children: [
-                  CardOne(color: Colors.green),
-                  SizedBox(width: 10),
-                  CardOne(color: Colors.red),
-                ],
+            ),
+            Text(
+              '₹ 5800988',
+              style: TextStyle(
+                fontSize: 50,
+                color: Colors.white,
+                height: 1.2,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ],
         ),
-      ),
+
+        Container(
+          padding: EdgeInsets.only(top: 30, bottom: 10, left: 10, right: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
+            ),
+            color: Colors.white,
+          ),
+          child: Row(
+            children: [
+              CardOne(color: Colors.green),
+              SizedBox(width: 10),
+              CardOne(color: Colors.red),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
