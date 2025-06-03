@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:spendwise/screens/login_screen.dart';
 import 'package:spendwise/widgets/hero_card.dart';
+import 'package:spendwise/widgets/transaction_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -50,15 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             HeroCard(),
             SizedBox(height: 20,),
-            Padding(
-              padding:  const EdgeInsets.all(15),
-              child: Row(
-                children: [
-                  Text('Recent Transactions',style: TextStyle(fontWeight:FontWeight.w600,fontSize: 20))
-                  
-                ],
-              ),
-            )
+            TransactionCard(),
+            
           ]
         ),
       ),
