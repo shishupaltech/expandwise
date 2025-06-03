@@ -29,6 +29,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue.shade900,
+        onPressed: (() {}),
+        child: Icon(Icons.add,color: Colors.white,),
+      ),
       appBar: AppBar(
         backgroundColor: Colors.blue.shade900,
         title: Text('Hello, ', style: TextStyle(color: Colors.white)),
@@ -45,18 +50,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Container(
-      
         width: double.infinity,
         child: Column(
-          children: [
-            HeroCard(),
-            SizedBox(height: 20,),
-            TransactionCard(),
-            
-          ]
+          children: [HeroCard(), SizedBox(height: 20), TransactionCard()],
         ),
       ),
     );
   }
 }
-
