@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:spendwise/screens/login_screen.dart';
+import 'package:spendwise/widgets/add_transaction_form.dart';
 import 'package:spendwise/widgets/hero_card.dart';
 import 'package:spendwise/widgets/transaction_card.dart';
 
@@ -30,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   _dialogBuilder(BuildContext context){
     return showDialog(context: context, builder: (context){
        return AlertDialog(
-        content: Text('test'),
+        content: AddTransactionForm(),
        );
     });
   }
