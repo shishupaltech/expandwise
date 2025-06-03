@@ -407,6 +407,11 @@ class AppIcons {
       "name": "Rental Expenses",
       "icon": FontAwesomeIcons.building,
     },
+    {
+      "name": "Others",
+      "icon": FontAwesomeIcons.ellipsisH,
+    },
+
   ];
 
   IconData getExpenseCategoryIcons(String categoryName){
