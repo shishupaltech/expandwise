@@ -26,11 +26,9 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
       //   'password': _passwordController.text,
       // };
 
-      print(data);
-      await authSerive.login(data, context);
-      Navigator.of(
-        context,
-      ).pushReplacement(MaterialPageRoute(builder: (context) => Dashboard()));
+      // print(data);
+      // await authSerive.login(data, context);
+     
       setState(() {
         isLoader = false;
       });
