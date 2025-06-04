@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:spendwise/utils/icons_list.dart';
 
 // ignore: must_be_immutable
@@ -10,6 +11,8 @@ class TransanctionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(data['timestamp']);
+    String formatedDate = DateFormat('d MMM hh:mma').format(date);
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8),
       child: Container(
@@ -36,17 +39,28 @@ class TransanctionCard extends StatelessWidget {
               height: 30,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                color: Colors.green.withOpacity(0.2),
+                color:data['type']=='credit'?
+                 Colors.green.withOpacity(0.2):Colors.red.withOpacity(0.2),
               ),
               child: Center(
-                child: FaIcon(appIcons.getExpenseCategoryIcons('Rent')),
+                child: FaIcon(appIcons.getExpenseCategoryIcons('${data['category']}'),
+                color:data['type']=='credit'
+                ? Colors.green
+                :Colors.red,
+              ),
               ),
             ),
           ),
           title: Row(
             children: [
-              Expanded(child: Text('Card Rent Oct 2023')),
-              Text('₹ 8000', style: TextStyle(color: Colors.green)),
+              Expanded(child: Text('${data['title']}')),
+              Text("${data['type']=='credit'?'+':'-'} ₹${data['amount']}", 
+               style: TextStyle(
+                color:data['type']=='credit'
+                ? Colors.green
+                :Colors.red,
+                )
+              ),
             ],
           ),
           subtitle: Column(
@@ -61,12 +75,12 @@ class TransanctionCard extends StatelessWidget {
                   ),
                   Spacer(),
                   Text(
-                    '₹ 525',
+                    '₹  ${data['remainingAount']}',
                     style: TextStyle(color: Colors.grey, fontSize: 13),
                   ),
                 ],
               ),
-              Text('25 oct 4:51 PM', style: TextStyle(color: Colors.grey)),
+              Text(formatedDate, style: TextStyle(color: Colors.grey)),
             ],
           ),
         ),

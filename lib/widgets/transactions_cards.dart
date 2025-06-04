@@ -37,7 +37,7 @@ class RecentTransanctionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('users').doc(userId).collection('transactions').snapshots(),
+      stream: FirebaseFirestore.instance.collection('users').doc(userId).collection('transactions').orderBy('timestamp',descending: false).limit(10).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Text('Something went wrong');
@@ -49,11 +49,12 @@ class RecentTransanctionList extends StatelessWidget {
         var data = snapshot.data!.docs;
         return ListView.builder(
           shrinkWrap: true,
-          itemCount: 2,
+          itemCount: data.length,
           physics: NeverScrollableScrollPhysics(),
 
           itemBuilder: (context, index) {
-            return TransanctionCard(data: data);
+            var cardData = data[index];
+            return TransanctionCard(data: cardData);
           },
         );
       },

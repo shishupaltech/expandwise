@@ -60,10 +60,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: Container(
-        width: double.infinity,
-        child: Column(
-          children: [HeroCard(userId:userId ,), SizedBox(height: 20), TransactionsCards()],
+      body: SingleChildScrollView(
+        child: Container(
+          width: double.infinity,
+          child: Column(
+            children: [HeroCard(userId:userId ,), SizedBox(height: 20), TransactionsCards()],
+          ),
         ),
       ),
     );
