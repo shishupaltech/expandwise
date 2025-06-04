@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:spendwise/screens/dashboard.dart';
+import 'package:spendwise/services/db.dart';
 
 class AuthService {
+  var db = Db();
   createUser(data, context) async {
     try {
       final credential = await FirebaseAuth.instance
@@ -14,6 +16,7 @@ class AuthService {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('User Created Successfully'))
       );
+      await db.addUser(data, context);
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => Dashboard()),
       );

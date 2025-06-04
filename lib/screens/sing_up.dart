@@ -38,6 +38,9 @@ class _SingUpState extends State<SingUp> {
         'email':_emailController.text,
         'phonenumber':_phoneNumberController.text,
         'password':_passwordController.text,
+        'remainingAount':0,
+        'totalCredit':0,
+        'totalDebit':0,
         
       };
       print(data);
