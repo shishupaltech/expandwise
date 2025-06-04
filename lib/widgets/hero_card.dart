@@ -81,9 +81,9 @@ class Cards extends StatelessWidget {
             ),
             child: Row(
               children: [
-                CardOne(color: Colors.green, heading: 'Credit', amount:  '₹ ${data['totalDebit']}',),
+                CardOne(color: Colors.green, heading: 'Credit', amount:  '${data['totalCredit']}',),
                 SizedBox(width: 10),
-                CardOne(color: Colors.red, heading: 'Debit', amount:  '₹ ${data['remainingAount']}',),
+                CardOne(color: Colors.red, heading: 'Debit', amount:  '${data['totalDebit']}',),
               ],
             ),
           ),

@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:spendwise/utils/appvalidator.dart';
 import 'package:spendwise/widgets/category_dropdown.dart';
+import 'package:uuid/uuid.dart';
+import 'package:intl/intl.dart';
 
 class AddTransactionForm extends StatefulWidget {
   const AddTransactionForm({super.key});
@@ -16,19 +20,76 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   var isLoader = false;
   var appValidator = Appvalidator();
+  var uid = Uuid();
+
+  var amountEditController = TextEditingController();
+  var titleEditController = TextEditingController();
   Future<void> _submitForm() async {
     if (_formkey.currentState!.validate()) {
       setState(() {
         isLoader = true;
       });
-      // var data = {
-      //   'email': _emailController.text,
-      //   'password': _passwordController.text,
-      // };
+
+      final user = FirebaseAuth.instance.currentUser;
+      int timestapm = DateTime.now().microsecondsSinceEpoch;
+      var amount = int.parse(amountEditController.text);
+      DateTime date = DateTime.now();
+
+      var id = uid.v4();
+      String monthyear = DateFormat('MMM y').format(date);
+
+      final userDoc =
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user!.uid)
+              .get();
+
+      int remainingAount = userDoc['remainingAount'];
+      int totalCredit = userDoc['totalCredit'];
+      int totalDebit = userDoc['totalDebit'];
+
+      if (type == 'credit') {
+        remainingAount += amount;
+        totalCredit += amount;
+      } else {
+        remainingAount -= amount;
+        totalDebit -= amount;
+      }
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
+          .update({
+            "remainingAount": remainingAount,
+            "totalCredit": totalCredit,
+            "totalDebit": totalDebit,
+            "updateAt": timestapm,
+          });
+
+      var data = {
+        'id': id,
+        'title': titleEditController.text,
+        'amount': amount,
+        'type': type,
+        'timestamp': timestapm,
+        'totalCredit': totalCredit,
+        'totalDebit': totalDebit,
+        'remainingAount': remainingAount,
+        'monthyear': monthyear,
+        'category': category,
+      };
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
+          .collection('transactions')
+          .doc(id)
+          .set(data);
+      Navigator.pop(context);
 
       // print(data);
       // await authSerive.login(data, context);
-     
+
       setState(() {
         isLoader = false;
       });
@@ -44,11 +105,13 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextFormField(
+              controller: titleEditController,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: appValidator.isEmptyCheck,
               decoration: InputDecoration(labelText: 'Title'),
             ),
             TextFormField(
+              controller: amountEditController,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: appValidator.isEmptyCheck,
               keyboardType: TextInputType.number,
@@ -82,12 +145,14 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                if(isLoader==false){
-                _submitForm();
+                if (isLoader == false) {
+                  _submitForm();
                 }
               },
-              child: isLoader?Center(child: CircularProgressIndicator()):
-               Text('Add Trasaction'),
+              child:
+                  isLoader
+                      ? Center(child: CircularProgressIndicator())
+                      : Text('Add Trasaction'),
             ),
           ],
         ),
