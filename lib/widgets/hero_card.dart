@@ -1,13 +1,27 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class HeroCard extends StatelessWidget {
-  const HeroCard({super.key});
+   HeroCard({super.key, required this.userId});
+  final String userId;
+  final Stream<DocumentSnapshot> _usersStream =
+      FirebaseFirestore.instance.collection('users').doc().snapshots();
+  @override
+  Widget build(BuildContext context) {
+    return Cards();
+  }
+}
+
+class Cards extends StatelessWidget {
+  const Cards({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.blue.shade900,
-      
+    
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -37,7 +51,7 @@ class HeroCard extends StatelessWidget {
               ],
             ),
           ),
-      
+    
           Container(
             padding: EdgeInsets.only(top: 30, bottom: 10, left: 10, right: 10),
             decoration: BoxDecoration(
@@ -81,17 +95,23 @@ class CardOne extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Credit', style: TextStyle(color: color, fontSize: 30,)),
-                  Text('₹58000', style: TextStyle(color: color, fontSize: 30,fontWeight: FontWeight.w600)),
+                  Text('Credit', style: TextStyle(color: color, fontSize: 30)),
+                  Text(
+                    '₹58000',
+                    style: TextStyle(
+                      color: color,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ],
               ),
               Spacer(),
               Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Icon(Icons.arrow_upward_outlined,color: color,)
+                child: Icon(Icons.arrow_upward_outlined, color: color),
               ),
             ],
-             
           ),
         ),
       ),
