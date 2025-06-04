@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spendwise/widgets/category_list.dart';
+import 'package:spendwise/widgets/tab_bar_view.dart';
 import 'package:spendwise/widgets/time_line_month.dart';
 
 class TransanctionScreen extends StatelessWidget {
@@ -13,6 +14,7 @@ class TransanctionScreen extends StatelessWidget {
         children:[
           TimeLineMonth(onChanged: (String? value) {  },),
           CategoryList(onChanged: (String? value) {  },),
+          TypeBarView(),
         ]
       ),
     );
