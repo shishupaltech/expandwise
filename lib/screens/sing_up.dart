@@ -45,9 +45,7 @@ class _SingUpState extends State<SingUp> {
       };
       print(data);
       await authSerive.createUser(data, context);
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => Dashboard()),
-      );
+      
         setState(() {
         isLoader=false;
       });
