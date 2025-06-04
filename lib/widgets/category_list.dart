@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:spendwise/utils/icons_list.dart';
 
 class CategoryList extends StatefulWidget {
   const CategoryList({super.key, required this.onChanged});
@@ -10,69 +12,83 @@ class CategoryList extends StatefulWidget {
 }
 
 class _CategoryListState extends State<CategoryList> {
-  String currentMonth = "";
-  List<String> months = [];
+  String currentCategory = "";
+
+  List<Map<String,dynamic>> categorylist =[];
+  
+  var appIcons = AppIcons();
   final scrollController = ScrollController();
-
-
+  var addCat = {
+    "name":"All",
+    "icon":FontAwesomeIcons.cartPlus,
+  };
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    DateTime now = DateTime.now();
-    for(int i=-18;i<=0;i++){
-      months.add(
-        DateFormat('MMM y').format(DateTime(now.year,now.month+i,1)),
-      );
-    }
-    currentMonth = DateFormat('MMM Y').format(now);
-    Future.delayed(Duration(seconds: 1),(){
-      scrolltoSelectedMonth();
+    setState(() {
+      
+    categorylist = appIcons.homeExpensesCategories;
+    categorylist.insert(0,addCat);
     });
   }
 
-  scrolltoSelectedMonth(){
-    final selectedMonthIndex = months.indexOf(currentMonth);
-    if(selectedMonthIndex != -1){
-      final scrollOffset = (selectedMonthIndex*100.0)-170;
-      scrollController.animateTo(scrollOffset, duration: Duration(milliseconds: 500), curve: Curves.ease);
-    }
-  }
+  // scrolltoSelectedMonth(){
+  //   final selectedMonthIndex = months.indexOf(currentMonth);
+  //   if(selectedMonthIndex != -1){
+  //     final scrollOffset = (selectedMonthIndex*100.0)-170;
+  //     scrollController.animateTo(scrollOffset, duration: Duration(milliseconds: 500), curve: Curves.ease);
+  //   }
+  // }
+
+ 
 
   @override
   Widget build(BuildContext context) {
+    
     return Container(
-      height: 40,
+      height: 45,
       child: ListView.builder(
         controller: scrollController,
-        itemCount: months.length,
+        itemCount: categorylist.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
+          var data = categorylist[index];
           return GestureDetector(
-            onTap: (){
+            onTap: () {
               setState(() {
-                currentMonth = months[index];
-                widget.onChanged()
+                currentCategory = data['name'];
+                widget.onChanged(data['name']);
               });
-              scrolltoSelectedMonth();
             },
             child: Container(
-              width: 80, 
-              margin: EdgeInsets.all(8),
+              padding: EdgeInsets.only(left: 10, right: 10),
+
+              margin: EdgeInsets.all(6),
               decoration: BoxDecoration(
-                
-                color:currentMonth==months[index]?Colors.blue.shade900:
-                 Colors.red.withOpacity(0.1),
+                color:
+                    currentCategory == data['name']
+                        ? Colors.blue.shade900
+                        : Colors.blue.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(10),
-            
               ),
-              child: Center(child: Text(
-                months[index],
-                style: TextStyle(
-                   
-                color:currentMonth==months[index]?Colors.white:
-                 Colors.deepPurple,
+              child: Center(
+                child: Row(
+                  children: [
+                    Icon(data['icon'],size: 18,color: currentCategory == data['name']
+                                ? Colors.white
+                                : Colors.blue.shade900,),
+                    SizedBox(width: 20,),
+                    Text(
+                      data['name'],
+                      style: TextStyle(
+                        color:
+                            currentCategory == data['name']
+                                ? Colors.white
+                                : Colors.blue.shade900,
+                      ),
+                    ),
+                  ],
                 ),
-                )
               ),
             ),
           );
