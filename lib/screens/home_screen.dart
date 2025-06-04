@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:spendwise/screens/login_screen.dart';
 import 'package:spendwise/widgets/add_transaction_form.dart';
 import 'package:spendwise/widgets/hero_card.dart';
-import 'package:spendwise/widgets/transaction_card.dart';
+import 'package:spendwise/widgets/transactions_cards.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Container(
         width: double.infinity,
         child: Column(
-          children: [HeroCard(userId:userId ,), SizedBox(height: 20), TransactionCard()],
+          children: [HeroCard(userId:userId ,), SizedBox(height: 20), TransactionsCards()],
         ),
       ),
     );
