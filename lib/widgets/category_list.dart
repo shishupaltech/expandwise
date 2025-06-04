@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class TimeLineMonth extends StatefulWidget {
-  const TimeLineMonth({super.key, required this.onChanged});
+class CategoryList extends StatefulWidget {
+  const CategoryList({super.key, required this.onChanged});
 
   final ValueChanged<String?> onChanged;
   @override
-  State<TimeLineMonth> createState() => _TimeLineMonthState();
+  State<CategoryList> createState() => _CategoryListState();
 }
 
-class _TimeLineMonthState extends State<TimeLineMonth> {
+class _CategoryListState extends State<CategoryList> {
   String currentMonth = "";
   List<String> months = [];
   final scrollController = ScrollController();

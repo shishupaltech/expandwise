@@ -10,7 +10,7 @@ class TransanctionScreen extends StatelessWidget {
       appBar: AppBar(title: Text('Expansive')),
       body: Column(
         children:[
-          TimeLineMonth(),
+          TimeLineMonth(onChanged: (String? value) {  },),
         ]
       ),
     );
