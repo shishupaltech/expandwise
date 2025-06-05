@@ -1,14 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HeroCard extends StatelessWidget {
-   HeroCard({super.key, required this.userId});
-  final String userId;
+   HeroCard({super.key});
   
   @override
   Widget build(BuildContext context) {
+    final String currentUserId = FirebaseAuth.instance.currentUser?.uid ?? '';
+    if (currentUserId.isEmpty) {
+      return const Text('No user is currently signed in.');
+    }
     final Stream<DocumentSnapshot> _usersStream =
-      FirebaseFirestore.instance.collection('users').doc(userId).snapshots();
+      FirebaseFirestore.instance.collection('users').doc(currentUserId).snapshots();
      return StreamBuilder<DocumentSnapshot>(
       stream: _usersStream,
       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {

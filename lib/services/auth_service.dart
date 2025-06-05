@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:spendwise/screens/dashboard.dart';
 import 'package:spendwise/services/db.dart';
 
 class AuthService {
@@ -12,23 +11,22 @@ class AuthService {
         email: data['email'],
         password: data['password'],
       );
-      print('User created: ${credential.user?.uid}');
+      print('User created: \\${credential.user?.uid}');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('User Created Successfully'))
       );
       await db.addUser(data, context);
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => Dashboard()),
-      );
+      // Instead of navigating to Dashboard, just pop to root. AuthGate will handle navigation.
+      Navigator.of(context).popUntil((route) => route.isFirst);
     } on FirebaseAuthException catch (e) {
-      print('FirebaseAuthException code: ${e.code}');
-      print('FirebaseAuthException message: ${e.message}');
+      print('FirebaseAuthException code: \\${e.code}');
+      print('FirebaseAuthException message: \\${e.message}');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: ${e.message}')),
+        SnackBar(content: Text('Error: \\${e.message}')),
       );
       
     } catch (e) {
-      print('Unknown error: $e');
+      print('Unknown error: \\${e}');
     }
   }
 
@@ -38,17 +36,14 @@ class AuthService {
         email: data['email'],
         password: data['password'],
       );
-
-      print('Login successful: ${credential.user?.uid}');
+      print('Login successful: \\${credential.user?.uid}');
+      print('Current user after login: \\${FirebaseAuth.instance.currentUser}');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Login successful!')),
       );
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => Dashboard()),
-      );
-      
-      // TODO: Navigate to home screen or dashboard here.
-      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomePage()));
+      // Instead of navigating to Dashboard, just pop to root. AuthGate will handle navigation.
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      // TODO: AuthGate will show Dashboard automatically.
     }catch(e){
       print(e);
     }

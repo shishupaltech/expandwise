@@ -5,7 +5,6 @@ import 'package:spendwise/widgets/transanction_card.dart';
 
 class TransactionList extends StatelessWidget {
    TransactionList({super.key, required this.category, required this.type, required this.monthyear});
-  final userId = FirebaseAuth.instance.currentUser!.uid;
   final String category;
   final String type;
   final String monthyear;
@@ -14,19 +13,26 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String? currentUserId = FirebaseAuth.instance.currentUser?.uid;
+    if (currentUserId == null || currentUserId.isEmpty) {
+      return Center(
+        child: Text('No user is currently signed in.'),
+      );
+    }
+
     print('Category: $category');
     print('MonthYear: $monthyear');
-      Query query = FirebaseFirestore.instance
+    Query query = FirebaseFirestore.instance
       .collection('users')
-      .doc(userId)
+      .doc(currentUserId)
       .collection('transactions')
-      .orderBy('timestamp',descending: true)
-      .where('monthyear',isEqualTo:monthyear )
-      .where('type',isEqualTo:type);
+      .orderBy('timestamp', descending: true)
+      .where('monthyear', isEqualTo: monthyear)
+      .where('type', isEqualTo: type);
 
-      if(category != 'All'){
-        query= query.where('category',isEqualTo: category);
-      }
+    if (category != 'All') {
+      query = query.where('category', isEqualTo: category);
+    }
 
     return FutureBuilder<QuerySnapshot>(
       future: query.limit(150).get(),

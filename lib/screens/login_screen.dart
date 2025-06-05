@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spendwise/screens/dashboard.dart';
 import 'package:spendwise/screens/sing_up.dart';
 import 'package:spendwise/services/auth_service.dart';
 import 'package:spendwise/utils/appvalidator.dart';
@@ -20,9 +19,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   Future<void> _submitForm() async {
     if (_formkey.currentState!.validate()) {
-      // ScaffoldMessenger.of(_formkey.currentContext!).showSnackBar(
-      //   const SnackBar(content: Text('Form successfully submitted!..')),
-      // );
       setState(() {
         isLoader = true;
       });
@@ -31,10 +27,13 @@ class _LoginScreenState extends State<LoginScreen> {
         'password': _passwordController.text,
       };
       print(data);
-      await authSerive.login(data, context);
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => Dashboard()),
-      );
+      try {
+        await authSerive.login(data, context);
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Login failed: \\${e.toString()}')),
+        );
+      }
       setState(() {
         isLoader = false;
       });
@@ -69,10 +68,10 @@ class _LoginScreenState extends State<LoginScreen> {
               TextFormField(
                 controller: _emailController,
                 decoration: _buildInputDecoration(
-                  'Username or Email',
-                  Icons.person,
+                  'Email', // Changed label to Email for clarity
+                  Icons.email,
                 ),
-                validator: appvalidator.validateUsername,
+                validator: appvalidator.validateEmail, // Use email validator
               ),
 
               SizedBox(height: 16.0),

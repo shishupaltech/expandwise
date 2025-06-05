@@ -32,10 +32,14 @@ class TransactionsCards extends StatelessWidget {
 class RecentTransanctionList extends StatelessWidget {
    RecentTransanctionList({super.key});
 
-  final userId = FirebaseAuth.instance.currentUser!.uid;
-
   @override
   Widget build(BuildContext context) {
+    final String? userId = FirebaseAuth.instance.currentUser?.uid;
+    if (userId == null || userId.isEmpty) {
+      return Center(
+        child: Text('No user is currently signed in.'),
+      );
+    }
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('users').doc(userId).collection('transactions').orderBy('timestamp',descending: false).limit(10).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
